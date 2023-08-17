@@ -89,10 +89,10 @@ function ContactList() {
                       {contact.lastName}
                     </p>
                     <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                      Email: {contact.mobileNumber}
+                      Email: {contact.emailAddress}
                     </p>
                     <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                      Number: {contact.emailAddress}
+                      Number: {contact.mobileNumber}
                     </p>
                   </div>
                 </div>
