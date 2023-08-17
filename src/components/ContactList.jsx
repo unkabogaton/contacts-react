@@ -53,13 +53,13 @@ function ContactList() {
 
   return (
     <>
-      <div className="w-full max-w-md p-4 bg-white border hover:drop-shadow-2xl rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 mx-auto">
-        <div className="flex items-center justify-between mb-4">
-          <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">
+      <div className="w-full max-w-md  bg-white border hover:drop-shadow-2xl rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mx-auto">
+        <div className="flex items-center justify-between p-4 sm:p-8 -mb-5 bg-gradient-to-r from-blue-500 to-cyan-500">
+          <h5 className="text-2xl font-bold leading-none text-white  dark:text-white">
             Contacts List
           </h5>
         </div>
-        <div className="flow-root">
+        <div className="flow-root p-4 sm:p-8">
           <ul
             role="list"
             className="divide-y divide-gray-200 dark:divide-gray-700"
