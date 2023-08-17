@@ -1,4 +1,56 @@
 function ContactList() {
+  const contacts = [
+    {
+      firstName: "John",
+      middleName: "Michael",
+      lastName: "Doe",
+      mobileNumber: "123-456-7890",
+      emailAddress: "john@example.com",
+    },
+    {
+      firstName: "Jane",
+      middleName: "Elizabeth",
+      lastName: "Smith",
+      mobileNumber: "987-654-3210",
+      emailAddress: "jane@example.com",
+    },
+    {
+      firstName: "Michael",
+      middleName: "Christopher",
+      lastName: "Johnson",
+      mobileNumber: "555-123-4567",
+      emailAddress: "michael@example.com",
+    },
+    {
+      firstName: "Emily",
+      middleName: "Grace",
+      lastName: "Williams",
+      mobileNumber: "777-888-9999",
+      emailAddress: "emily@example.com",
+    },
+    {
+      firstName: "David",
+      middleName: "Robert",
+      lastName: "Lee",
+      mobileNumber: "222-333-4444",
+      emailAddress: "david@example.com",
+    },
+    {
+      firstName: "Sophia",
+      middleName: "Olivia",
+      lastName: "Miller",
+      mobileNumber: "999-888-7777",
+      emailAddress: "sophia@example.com",
+    },
+    {
+      firstName: "William",
+      middleName: "Alexander",
+      lastName: "Brown",
+      mobileNumber: "444-555-6666",
+      emailAddress: "william@example.com",
+    },
+  ];
+
   return (
     <>
       <div className="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 mx-auto">
