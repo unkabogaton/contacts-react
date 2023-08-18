@@ -1,7 +1,10 @@
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { deleteContact } from "../redux/actions";
 
 function ContactList() {
   const contacts = useSelector((state) => state.contacts);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -47,6 +50,14 @@ function ContactList() {
                       Number: {contact.mobileNumber}
                     </p>
                   </div>
+                  <button
+                    className="btn"
+                    onClick={() => {
+                      dispatch(deleteContact(contact.id));
+                    }}
+                  >
+                    Delete
+                  </button>
                 </div>
               </li>
             ))}

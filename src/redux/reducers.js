@@ -3,7 +3,7 @@ import { ADD_CONTACT, UPDATE_CONTACT, DELETE_CONTACT } from "./actions";
 const initialState = {
   contacts: [
     {
-      id: "1",
+      id: 1,
       firstName: "John",
       middleName: "Michael",
       lastName: "Doe",
@@ -11,7 +11,7 @@ const initialState = {
       emailAddress: "john@example.com",
     },
     {
-      id: "2",
+      id: 2,
       firstName: "Jane",
       middleName: "Elizabeth",
       lastName: "Smith",
@@ -19,7 +19,7 @@ const initialState = {
       emailAddress: "jane@example.com",
     },
     {
-      id: "3",
+      id: 3,
       firstName: "Michael",
       middleName: "Christopher",
       lastName: "Johnson",
@@ -39,9 +39,17 @@ const contactReducer = (state = initialState, action) => {
     case UPDATE_CONTACT:
       // Implement the update logic here
       return state;
-    case DELETE_CONTACT:
-      // Implement the delete logic here
-      return state;
+    case DELETE_CONTACT: {
+      const updatedContacts = state.contacts.filter(
+        (contact) => contact.id !== action.payload
+      );
+      console.log(state);
+      return {
+        ...state,
+        contacts: updatedContacts,
+      };
+    }
+
     default:
       return state;
   }
