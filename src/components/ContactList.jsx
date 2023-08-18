@@ -1,18 +1,27 @@
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { deleteContact } from "../redux/actions";
+import { useNavigate } from "react-router-dom";
 
 function ContactList() {
   const contacts = useSelector((state) => state.contacts);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <>
-      <div className="w-full max-w-md  bg-white border hover:drop-shadow-2xl rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mx-auto">
+      <div className="w-full max-w-2xl  bg-white border hover:drop-shadow-2xl rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mx-auto">
         <div className="flex items-center justify-between p-4 sm:p-8 -mb-5 bg-gradient-to-r from-blue-500 to-cyan-500">
           <h5 className="text-2xl font-bold leading-none text-white  dark:text-white">
             Contacts List
           </h5>
+          <button
+            type="button"
+            className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center mr-2"
+            onClick={() => navigate("/create-contact")}
+          >
+            + Add Contact
+          </button>
         </div>
         <div className="flow-root p-4 sm:p-8">
           <ul
@@ -51,7 +60,13 @@ function ContactList() {
                     </p>
                   </div>
                   <button
-                    className="btn"
+                    className="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+                    onClick={() => navigate("/update-contact/" + contact.id)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
                     onClick={() => {
                       dispatch(deleteContact(contact.id));
                     }}
