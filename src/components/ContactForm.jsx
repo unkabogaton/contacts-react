@@ -57,7 +57,7 @@ function ContactForm() {
       <div className="w-full max-w-xl  bg-white border hover:drop-shadow-2xl rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mx-auto">
         <div className="flex items-center justify-between p-4 sm:p-8 bg-gradient-to-r from-blue-500 to-cyan-500">
           <h5 className="text-2xl font-bold leading-none text-white  dark:text-white">
-            Create Contact
+            {contactToUpdate ? "Update Contact" : "Create Contact"}
           </h5>
         </div>
         <div className="flow-root p-4 sm:p-8">
