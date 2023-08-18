@@ -25,6 +25,7 @@ function ContactList() {
           </button>
         </div>
         <div className="flow-root p-4 sm:p-8">
+          {contacts.length == 0 && <div className="text-xl"> No Contacts </div>}
           <ul
             role="list"
             className="divide-y divide-gray-200 dark:divide-gray-700"
