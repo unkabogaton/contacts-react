@@ -3,6 +3,7 @@ import { ADD_CONTACT, UPDATE_CONTACT, DELETE_CONTACT } from "./actions";
 const initialState = {
   contacts: [
     {
+      id: "1",
       firstName: "John",
       middleName: "Michael",
       lastName: "Doe",
@@ -10,6 +11,7 @@ const initialState = {
       emailAddress: "john@example.com",
     },
     {
+      id: "2",
       firstName: "Jane",
       middleName: "Elizabeth",
       lastName: "Smith",
@@ -17,6 +19,7 @@ const initialState = {
       emailAddress: "jane@example.com",
     },
     {
+      id: "3",
       firstName: "Michael",
       middleName: "Christopher",
       lastName: "Johnson",

@@ -16,8 +16,8 @@ function ContactList() {
             role="list"
             className="divide-y divide-gray-200 dark:divide-gray-700"
           >
-            {contacts.map((contact, index) => (
-              <li className="py-3 sm:py-4" key={index}>
+            {contacts.map((contact) => (
+              <li className="py-3 sm:py-4" key={contact.id}>
                 <div className="flex items-center space-x-4">
                   <div className="flex-shrink-0">
                     <div className="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
