@@ -4,8 +4,9 @@ import { addContact, updateContact } from "../redux/actions";
 
 function ContactForm() {
   const contactToUpdate = useSelector((state) =>
-    state.contacts.find((contact) => contact.id === selectedContactId)
+    state.contacts.find((contact) => contact.id === 9)
   );
+  let availableIndex = useSelector((state) => state.availableIndex);
 
   const dispatch = useDispatch();
 
@@ -29,7 +30,7 @@ function ContactForm() {
     e.preventDefault();
 
     const newContact = {
-      id: Date.now(),
+      id: availableIndex,
       firstName,
       middleName,
       lastName,

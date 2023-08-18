@@ -1,6 +1,7 @@
 import { ADD_CONTACT, UPDATE_CONTACT, DELETE_CONTACT } from "./actions";
 
 const initialState = {
+  availableIndex: 4,
   contacts: [
     {
       id: 1,
@@ -35,6 +36,7 @@ const contactReducer = (state = initialState, action) => {
       return {
         ...state,
         contacts: [...state.contacts, action.payload],
+        availableIndex: state.availableIndex + 1,
       };
     case UPDATE_CONTACT: {
       const contactsAfterEdit = state.contacts.map((contact) =>
