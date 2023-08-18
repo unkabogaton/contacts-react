@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addContact, updateContact } from "../redux/actions";
+import { useParams, useNavigate } from "react-router-dom";
 
 function ContactForm() {
+  const navigate = useNavigate();
+  const selectedContactId = useParams().id;
   const contactToUpdate = useSelector((state) =>
-    state.contacts.find((contact) => contact.id === 9)
+    state.contacts.find((contact) => contact.id == selectedContactId)
   );
+
   let availableIndex = useSelector((state) => state.availableIndex);
 
   const dispatch = useDispatch();
@@ -50,6 +54,8 @@ function ContactForm() {
     setLastName("");
     setMobileNumber("");
     setEmailAddress("");
+
+    navigate("/");
   };
 
   return (
