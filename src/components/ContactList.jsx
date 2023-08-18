@@ -1,55 +1,7 @@
+import { useSelector } from "react-redux";
+
 function ContactList() {
-  const contacts = [
-    {
-      firstName: "John",
-      middleName: "Michael",
-      lastName: "Doe",
-      mobileNumber: "1234567890",
-      emailAddress: "john@example.com",
-    },
-    {
-      firstName: "Jane",
-      middleName: "Elizabeth",
-      lastName: "Smith",
-      mobileNumber: "9876543210",
-      emailAddress: "jane@example.com",
-    },
-    {
-      firstName: "Michael",
-      middleName: "Christopher",
-      lastName: "Johnson",
-      mobileNumber: "555-123-4567",
-      emailAddress: "michael@example.com",
-    },
-    {
-      firstName: "Emily",
-      middleName: "Grace",
-      lastName: "Williams",
-      mobileNumber: "7778889999",
-      emailAddress: "emily@example.com",
-    },
-    {
-      firstName: "David",
-      middleName: "Robert",
-      lastName: "Lee",
-      mobileNumber: "2223334444",
-      emailAddress: "david@example.com",
-    },
-    {
-      firstName: "Sophia",
-      middleName: "Olivia",
-      lastName: "Miller",
-      mobileNumber: "9998887777",
-      emailAddress: "sophia@example.com",
-    },
-    {
-      firstName: "William",
-      middleName: "Alexander",
-      lastName: "Brown",
-      mobileNumber: "4445556666",
-      emailAddress: "william@example.com",
-    },
-  ];
+  const contacts = useSelector((state) => state.contacts);
 
   return (
     <>
