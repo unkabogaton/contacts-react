@@ -61,7 +61,14 @@ function ContactForm() {
   return (
     <>
       <div className="w-full max-w-xl  bg-white border hover:drop-shadow-2xl rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mx-auto">
-        <div className="flex items-center justify-between p-4 sm:p-8 bg-gradient-to-r from-blue-500 to-cyan-500">
+        <div className="flex items-center justify-start p-4 sm:p-8 bg-gradient-to-r from-blue-500 to-cyan-500">
+          <button
+            type="button"
+            className=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-3 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            onClick={() => navigate(-1)}
+          >
+            Back
+          </button>
           <h5 className="text-2xl font-bold leading-none text-white  dark:text-white">
             {contactToUpdate ? "Update Contact" : "Create Contact"}
           </h5>
