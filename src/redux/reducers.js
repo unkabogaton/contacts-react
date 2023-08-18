@@ -40,13 +40,13 @@ const contactReducer = (state = initialState, action) => {
       // Implement the update logic here
       return state;
     case DELETE_CONTACT: {
-      const updatedContacts = state.contacts.filter(
+      const contactsAfterDeletion = state.contacts.filter(
         (contact) => contact.id !== action.payload
       );
       console.log(state);
       return {
         ...state,
-        contacts: updatedContacts,
+        contacts: contactsAfterDeletion,
       };
     }
 
