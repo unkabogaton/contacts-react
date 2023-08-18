@@ -1,15 +1,29 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addContact } from "../redux/actions";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addContact, updateContact } from "../redux/actions";
 
 function ContactForm() {
+  const contactToUpdate = useSelector((state) =>
+    state.contacts.find((contact) => contact.id === selectedContactId)
+  );
+
+  const dispatch = useDispatch();
+
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
   const [lastName, setLastName] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
   const [emailAddress, setEmailAddress] = useState("");
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    if (contactToUpdate) {
+      setFirstName(contactToUpdate.firstName);
+      setMiddleName(contactToUpdate.middleName);
+      setLastName(contactToUpdate.lastName);
+      setMobileNumber(contactToUpdate.mobileNumber);
+      setEmailAddress(contactToUpdate.emailAddress);
+    }
+  }, [contactToUpdate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,9 +37,13 @@ function ContactForm() {
       emailAddress,
     };
 
-    dispatch(addContact(newContact));
+    if (contactToUpdate) {
+      newContact.id = contactToUpdate.id;
+      dispatch(updateContact(newContact));
+    } else {
+      dispatch(addContact(newContact));
+    }
 
-    // Clear form fields
     setFirstName("");
     setMiddleName("");
     setLastName("");
@@ -116,7 +134,7 @@ function ContactForm() {
               type="submit"
               className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
-              Submit
+              {contactToUpdate ? "Update Contact" : "Add Contact"}
             </button>
           </form>
         </div>

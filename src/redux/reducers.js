@@ -36,17 +36,23 @@ const contactReducer = (state = initialState, action) => {
         ...state,
         contacts: [...state.contacts, action.payload],
       };
-    case UPDATE_CONTACT:
-      // Implement the update logic here
-      return state;
+    case UPDATE_CONTACT: {
+      const contactsAfterEdit = state.contacts.map((contact) =>
+        contact.id === action.payload.id ? action.payload : contact
+      );
+      return {
+        ...state,
+        contacts: contactsAfterEdit,
+      };
+    }
     case DELETE_CONTACT: {
-      const contactsAfterDeletion = state.contacts.filter(
+      const contactsAfterDelete = state.contacts.filter(
         (contact) => contact.id !== action.payload
       );
       console.log(state);
       return {
         ...state,
-        contacts: contactsAfterDeletion,
+        contacts: contactsAfterDelete,
       };
     }
 
