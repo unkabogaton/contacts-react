@@ -9,7 +9,7 @@ const initialState = {
   availableIndex: 4,
   alertMessage: {
     show: false,
-    color: "",
+    color: "green",
     text: "This is a message",
   },
   contacts: [
@@ -47,6 +47,11 @@ const contactReducer = (state = initialState, action) => {
         ...state,
         contacts: [...state.contacts, action.payload],
         availableIndex: state.availableIndex + 1,
+        alertMessage: {
+          text: "Contact successfully created!",
+          color: "green",
+          show: true,
+        },
       };
     case UPDATE_CONTACT: {
       const contactsAfterEdit = state.contacts.map((contact) =>
@@ -55,6 +60,11 @@ const contactReducer = (state = initialState, action) => {
       return {
         ...state,
         contacts: contactsAfterEdit,
+        alertMessage: {
+          text: "Contact successfully edited!",
+          color: "green",
+          show: true,
+        },
       };
     }
     case DELETE_CONTACT: {
@@ -64,6 +74,11 @@ const contactReducer = (state = initialState, action) => {
       return {
         ...state,
         contacts: contactsAfterDelete,
+        alertMessage: {
+          text: "Contact successfully deleted!",
+          color: "green",
+          show: true,
+        },
       };
     }
     case CHANGE_ALERT_MESSAGE: {

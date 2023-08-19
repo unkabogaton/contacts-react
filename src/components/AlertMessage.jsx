@@ -14,7 +14,7 @@ function AlertMessage() {
     <>
       {alertMessage.show && (
         <div
-          className={`flex items-center max-w-4xl p-4 mb-4 text-${alertMessage.color}-800 rounded-lg bg-${alertMessage.color}-50 mx-auto`}
+          className={`flex items-center max-w-4xl p-4 mb-4 text-${alertMessage.color}-800 rounded-lg bg-${alertMessage.color}-200 mx-auto`}
           role="alert"
         >
           <svg
@@ -29,13 +29,12 @@ function AlertMessage() {
           <div className="ml-3 text-sm font-medium">{alertMessage.text}</div>
           <button
             type="button"
-            className={`ml-auto -my-1.5 bg-${alertMessage.color}-50 text-${alertMessage.color}-500 rounded-lg focus:ring-2 focus:ring-${alertMessage.color}-400 p-1.5 hover:bg-${alertMessage.color}-200 inline-flex items-center justify-center h-8 w-8`}
+            className={`ml-auto -my-1.5 text-gray-900 rounded-lg focus:ring-2 inline-flex items-center justify-center h-8 w-8`}
             data-dismiss-target="#alert-3"
             aria-label="Close"
             onClick={() => dispatch(changeAlertMessage(closeAlertMessage))}
           >
-            <span className="sr-only">Close</span>
-            Close
+            <span className="sr-only">Close</span>x
           </button>
         </div>
       )}
