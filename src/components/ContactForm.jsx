@@ -64,6 +64,10 @@ function ContactForm() {
     return emailRegex.test(email);
   };
 
+  const isValidMobileNumber = (number) => {
+    return number.startsWith("09") || number.length == 11;
+  };
+
   return (
     <>
       <div className="w-full max-w-xl  bg-white border hover:drop-shadow-2xl rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mx-auto">
