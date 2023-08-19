@@ -1,11 +1,13 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ContactList from "./components/ContactList";
 import ContactForm from "./components/ContactForm";
+import AlertMessage from "./components/AlertMessage";
 
 function App() {
   return (
     <>
       <div className="container mx-auto py-10 px-5">
+        <AlertMessage></AlertMessage>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<ContactList />} />
