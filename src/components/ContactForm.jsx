@@ -1,6 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addContact, updateContact } from "../redux/actions";
+import {
+  addContact,
+  changeAlertMessage,
+  updateContact,
+} from "../redux/actions";
 import { useParams, useNavigate } from "react-router-dom";
 import backIcon from "../assets/arrow-left.svg";
 
@@ -11,27 +15,24 @@ function ContactForm() {
     state.contacts.find((contact) => contact.id == selectedContactId)
   );
 
-  let availableIndex = useSelector((state) => state.availableIndex);
+  const availableIndex = useSelector((state) => state.availableIndex);
 
   const dispatch = useDispatch();
 
-  const [firstName, setFirstName] = useState("");
-  const [middleName, setMiddleName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [mobileNumber, setMobileNumber] = useState("");
-  const [emailAddress, setEmailAddress] = useState("");
+  const [firstName, setFirstName] = useState(contactToUpdate?.firstName || "");
+  const [lastName, setLastName] = useState(contactToUpdate?.lastName || "");
+  const [middleName, setMiddleName] = useState(
+    contactToUpdate?.middleName || ""
+  );
+  const [mobileNumber, setMobileNumber] = useState(
+    contactToUpdate?.mobileNumber || ""
+  );
+  const [emailAddress, setEmailAddress] = useState(
+    contactToUpdate?.emailAddress || ""
+  );
+  const [middleNameExist, setMiddleNameExist] = useState(true);
 
-  useEffect(() => {
-    if (contactToUpdate) {
-      setFirstName(contactToUpdate.firstName);
-      setMiddleName(contactToUpdate.middleName);
-      setLastName(contactToUpdate.lastName);
-      setMobileNumber(contactToUpdate.mobileNumber);
-      setEmailAddress(contactToUpdate.emailAddress);
-    }
-  }, [contactToUpdate]);
-
-  const handleSubmit = (e) => {
+  const submitContactForm = async (e) => {
     e.preventDefault();
 
     const newContact = {
@@ -59,6 +60,87 @@ function ContactForm() {
     navigate("/");
   };
 
+  const hideAlertMessage = () => {
+    dispatch(
+      changeAlertMessage({
+        show: false,
+      })
+    );
+  };
+
+  const showAlertMessage = (alertMessage) => {
+    dispatch(
+      changeAlertMessage({
+        show: true,
+        text: alertMessage,
+        color: "red",
+      })
+    );
+  };
+
+  const validateField = (field, value) => {
+    switch (field) {
+      case "firstName":
+        isStringEmpty(value)
+          ? showAlertMessage("First name is required")
+          : hideAlertMessage();
+        break;
+      case "middleName":
+        isStringEmpty(value)
+          ? showAlertMessage("Middle name is required")
+          : hideAlertMessage();
+        break;
+      case "lastName":
+        isStringEmpty(value)
+          ? showAlertMessage("Last name is required")
+          : hideAlertMessage();
+        break;
+      case "mobileNumber":
+        isStringEmpty(value)
+          ? showAlertMessage("Mobile number is required")
+          : !isValidMobileNumber(value)
+          ? showAlertMessage(
+              'Mobile number must start with "09" and have a length of 11 characters'
+            )
+          : hideAlertMessage();
+        break;
+      case "emailAddress":
+        isStringEmpty(value)
+          ? showAlertMessage("Email address is required")
+          : !isValidEmail(value)
+          ? showAlertMessage("Invalid email address, should include '@domain'")
+          : hideAlertMessage();
+        break;
+      default:
+        break;
+    }
+  };
+
+  const isStringEmpty = (string) => {
+    return string == "";
+  };
+
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const isValidMobileNumber = (number) => {
+    return number.startsWith("09") && number.length == 11;
+  };
+
+  const handleMiddleNameChange = (e) => {
+    if (e.target.checked) {
+      setMiddleNameExist(false);
+      setMiddleName("");
+      setmiddleNameError(false);
+      hideAlertMessage();
+    } else {
+      setMiddleNameExist(true);
+      setmiddleNameError(true);
+    }
+  };
+
   return (
     <>
       <div className="w-full max-w-xl  bg-white border hover:drop-shadow-2xl rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mx-auto">
@@ -75,11 +157,11 @@ function ContactForm() {
           </h5>
         </div>
         <div className="flow-root p-4 sm:p-8">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={submitContactForm}>
             <div className="grid gap-6 mb-6">
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  First name
+                  First name*
                 </label>
                 <input
                   type="text"
@@ -87,25 +169,43 @@ function ContactForm() {
                   placeholder="John"
                   required
                   value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
+                  onChange={(e) => {
+                    setFirstName(e.target.value.trim());
+                    validateField("firstName", e.target.value.trim());
+                  }}
                 />
               </div>
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Middle Name
+                  Middle Name*
                 </label>
+                {middleNameExist && (
+                  <div>
+                    <input
+                      type="text"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Doe"
+                      required
+                      value={middleName}
+                      onChange={(e) => {
+                        setMiddleName(e.target.value.trim());
+                        validateField("middleName", e.target.value.trim());
+                      }}
+                    />
+                  </div>
+                )}
                 <input
-                  type="text"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Doe"
-                  required
-                  value={middleName}
-                  onChange={(e) => setMiddleName(e.target.value)}
+                  type="checkbox"
+                  value="true"
+                  onChange={(e) => handleMiddleNameChange(e)}
                 />
+                <label className="ml-2 text-sm font-medium text-gray-900">
+                  No Middle Name
+                </label>
               </div>
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Last name
+                  Last name*
                 </label>
                 <input
                   type="text"
@@ -113,26 +213,32 @@ function ContactForm() {
                   placeholder="Dela Cruz"
                   required
                   value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
+                  onChange={(e) => {
+                    setLastName(e.target.value.trim());
+                    validateField("lastName", e.target.value.trim());
+                  }}
                 />
               </div>
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Phone number
+                  Phone number*
                 </label>
                 <input
                   type="tel"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="092147478564"
+                  placeholder="09xxxxxxxxx"
                   pattern="09[0-9]{9}"
                   required
                   value={mobileNumber}
-                  onChange={(e) => setMobileNumber(e.target.value)}
+                  onChange={(e) => {
+                    setMobileNumber(e.target.value.trim());
+                    validateField("mobileNumber", e.target.value.trim());
+                  }}
                 />
               </div>
               <div className="mb-3">
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Email address
+                  Email address*
                 </label>
                 <input
                   type="email"
@@ -140,7 +246,10 @@ function ContactForm() {
                   placeholder="john.doe@company.com"
                   required
                   value={emailAddress}
-                  onChange={(e) => setEmailAddress(e.target.value)}
+                  onChange={(e) => {
+                    setEmailAddress(e.target.value.trim());
+                    validateField("emailAddress", e.target.value.trim());
+                  }}
                 />
               </div>
             </div>
