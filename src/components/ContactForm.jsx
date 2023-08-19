@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addContact, updateContact } from "../redux/actions";
+import {
+  addContact,
+  changeAlertMessage,
+  updateContact,
+} from "../redux/actions";
 import { useParams, useNavigate } from "react-router-dom";
 import backIcon from "../assets/arrow-left.svg";
 
@@ -59,8 +63,59 @@ function ContactForm() {
     navigate("/");
   };
 
-  const isStringValid = (string) => {
-    string === "";
+  const hideAlertMessage = () => {
+    dispatch(
+      changeAlertMessage({
+        show: false,
+      })
+    );
+  };
+
+  const showAlertMessage = (alertMessage) => {
+    dispatch(
+      changeAlertMessage({
+        show: true,
+        text: alertMessage,
+        color: "red",
+      })
+    );
+  };
+
+  const validateField = (field, value) => {
+    switch (field) {
+      case "firstName":
+        isStringEmpty(value)
+          ? showAlertMessage("First name is required")
+          : hideAlertMessage();
+        break;
+      case "lastName":
+        isStringEmpty(value)
+          ? showAlertMessage("Last name is required")
+          : hideAlertMessage();
+        break;
+      case "mobileNumber":
+        isStringEmpty(value)
+          ? showAlertMessage("Mobile number is required")
+          : !isValidMobileNumber(value)
+          ? showAlertMessage(
+              'Mobile number must start with "09" and have a length of 11 characters'
+            )
+          : hideAlertMessage();
+        break;
+      case "emailAddress":
+        isStringEmpty(value)
+          ? showAlertMessage("Email address is required")
+          : !isValidEmail(value)
+          ? showAlertMessage("Invalid email address, should include '@domain'")
+          : hideAlertMessage();
+        break;
+      default:
+        break;
+    }
+  };
+
+  const isStringEmpty = (string) => {
+    return string == "";
   };
 
   const isValidEmail = (email) => {
@@ -69,7 +124,7 @@ function ContactForm() {
   };
 
   const isValidMobileNumber = (number) => {
-    return number.startsWith("09") || number.length == 11;
+    return number.startsWith("09") && number.length == 11;
   };
 
   return (
@@ -100,7 +155,10 @@ function ContactForm() {
                   placeholder="John"
                   required
                   value={firstName}
-                  onChange={(e) => setFirstName(e.target.value.trim())}
+                  onChange={(e) => {
+                    setFirstName(e.target.value.trim());
+                    validateField("firstName", e.target.value.trim());
+                  }}
                 />
               </div>
               <div>
@@ -126,7 +184,10 @@ function ContactForm() {
                   placeholder="Dela Cruz"
                   required
                   value={lastName}
-                  onChange={(e) => setLastName(e.target.value.trim())}
+                  onChange={(e) => {
+                    setLastName(e.target.value.trim());
+                    validateField("lastName", e.target.value.trim());
+                  }}
                 />
               </div>
               <div>
@@ -140,7 +201,10 @@ function ContactForm() {
                   pattern="09[0-9]{9}"
                   required
                   value={mobileNumber}
-                  onChange={(e) => setMobileNumber(e.target.value.trim())}
+                  onChange={(e) => {
+                    setMobileNumber(e.target.value.trim());
+                    validateField("mobileNumber", e.target.value.trim());
+                  }}
                 />
               </div>
               <div className="mb-3">
@@ -153,7 +217,10 @@ function ContactForm() {
                   placeholder="john.doe@company.com"
                   required
                   value={emailAddress}
-                  onChange={(e) => setEmailAddress(e.target.value.trim())}
+                  onChange={(e) => {
+                    setEmailAddress(e.target.value.trim());
+                    validateField("emailAddress", e.target.value.trim());
+                  }}
                 />
               </div>
             </div>
