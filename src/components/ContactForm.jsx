@@ -88,6 +88,11 @@ function ContactForm() {
           ? showAlertMessage("First name is required")
           : hideAlertMessage();
         break;
+      case "middleName":
+        isStringEmpty(value)
+          ? showAlertMessage("Middle name is required")
+          : hideAlertMessage();
+        break;
       case "lastName":
         isStringEmpty(value)
           ? showAlertMessage("Last name is required")
@@ -171,7 +176,10 @@ function ContactForm() {
                   placeholder="Doe"
                   required
                   value={middleName}
-                  onChange={(e) => setMiddleName(e.target.value.trim())}
+                  onChange={(e) => {
+                    setMiddleName(e.target.value.trim());
+                    validateField("middleName", e.target.value.trim());
+                  }}
                 />
               </div>
               <div>
