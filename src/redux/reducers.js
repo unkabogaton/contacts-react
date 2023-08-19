@@ -1,7 +1,17 @@
-import { ADD_CONTACT, UPDATE_CONTACT, DELETE_CONTACT } from "./actions";
+import {
+  ADD_CONTACT,
+  UPDATE_CONTACT,
+  DELETE_CONTACT,
+  CHANGE_ALERT_MESSAGE,
+} from "./actions";
 
 const initialState = {
   availableIndex: 4,
+  alertMessage: {
+    show: false,
+    color: "",
+    text: "This is a message",
+  },
   contacts: [
     {
       id: 1,
@@ -56,7 +66,12 @@ const contactReducer = (state = initialState, action) => {
         contacts: contactsAfterDelete,
       };
     }
-
+    case CHANGE_ALERT_MESSAGE: {
+      return {
+        ...state,
+        alertMessage: action.payload,
+      };
+    }
     default:
       return state;
   }

@@ -7,8 +7,8 @@ function App() {
   return (
     <>
       <div className="container mx-auto py-10 px-5">
-        <AlertMessage></AlertMessage>
         <BrowserRouter>
+          <AlertMessage></AlertMessage>
           <Routes>
             <Route path="/" element={<ContactList />} />
             <Route path="create-contact" element={<ContactForm />} />
