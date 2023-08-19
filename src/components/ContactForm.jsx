@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   addContact,
@@ -19,24 +19,20 @@ function ContactForm() {
 
   const dispatch = useDispatch();
 
-  const [firstName, setFirstName] = useState("");
-  const [middleName, setMiddleName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [mobileNumber, setMobileNumber] = useState("");
-  const [emailAddress, setEmailAddress] = useState("");
+  const [firstName, setFirstName] = useState(contactToUpdate?.firstName || "");
+  const [lastName, setLastName] = useState(contactToUpdate?.lastName || "");
+  const [middleName, setMiddleName] = useState(
+    contactToUpdate?.middleName || ""
+  );
+  const [mobileNumber, setMobileNumber] = useState(
+    contactToUpdate?.mobileNumber || ""
+  );
+  const [emailAddress, setEmailAddress] = useState(
+    contactToUpdate?.emailAddress || ""
+  );
   const [middleNameExist, setMiddleNameExist] = useState(true);
 
-  useEffect(() => {
-    if (contactToUpdate) {
-      setFirstName(contactToUpdate.firstName);
-      setMiddleName(contactToUpdate.middleName);
-      setLastName(contactToUpdate.lastName);
-      setMobileNumber(contactToUpdate.mobileNumber);
-      setEmailAddress(contactToUpdate.emailAddress);
-    }
-  }, [contactToUpdate]);
-
-  const submitContactForm = (e) => {
+  const submitContactForm = async (e) => {
     e.preventDefault();
 
     const newContact = {
@@ -137,9 +133,11 @@ function ContactForm() {
     if (e.target.checked) {
       setMiddleNameExist(false);
       setMiddleName("");
+      setmiddleNameError(false);
       hideAlertMessage();
     } else {
       setMiddleNameExist(true);
+      setmiddleNameError(true);
     }
   };
 
@@ -163,7 +161,7 @@ function ContactForm() {
             <div className="grid gap-6 mb-6">
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  First name
+                  First name*
                 </label>
                 <input
                   type="text"
@@ -179,7 +177,7 @@ function ContactForm() {
               </div>
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Middle Name
+                  Middle Name*
                 </label>
                 {middleNameExist && (
                   <div>
@@ -207,7 +205,7 @@ function ContactForm() {
               </div>
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Last name
+                  Last name*
                 </label>
                 <input
                   type="text"
@@ -223,12 +221,12 @@ function ContactForm() {
               </div>
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Phone number
+                  Phone number*
                 </label>
                 <input
                   type="tel"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="092147478564"
+                  placeholder="09xxxxxxxxx"
                   pattern="09[0-9]{9}"
                   required
                   value={mobileNumber}
@@ -240,7 +238,7 @@ function ContactForm() {
               </div>
               <div className="mb-3">
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Email address
+                  Email address*
                 </label>
                 <input
                   type="email"
