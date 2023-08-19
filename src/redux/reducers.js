@@ -51,7 +51,6 @@ const contactReducer = (state = initialState, action) => {
       const contactsAfterDelete = state.contacts.filter(
         (contact) => contact.id !== action.payload
       );
-      console.log(state);
       return {
         ...state,
         contacts: contactsAfterDelete,
