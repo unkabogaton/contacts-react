@@ -31,7 +31,7 @@ function ContactForm() {
     }
   }, [contactToUpdate]);
 
-  const handleSubmit = (e) => {
+  const submitContactForm = (e) => {
     e.preventDefault();
 
     const newContact = {
@@ -59,6 +59,11 @@ function ContactForm() {
     navigate("/");
   };
 
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   return (
     <>
       <div className="w-full max-w-xl  bg-white border hover:drop-shadow-2xl rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mx-auto">
@@ -75,7 +80,7 @@ function ContactForm() {
           </h5>
         </div>
         <div className="flow-root p-4 sm:p-8">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={submitContactForm}>
             <div className="grid gap-6 mb-6">
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
