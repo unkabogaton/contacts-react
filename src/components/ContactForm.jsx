@@ -15,7 +15,7 @@ function ContactForm() {
     state.contacts.find((contact) => contact.id == selectedContactId)
   );
 
-  let availableIndex = useSelector((state) => state.availableIndex);
+  const availableIndex = useSelector((state) => state.availableIndex);
 
   const dispatch = useDispatch();
 
@@ -24,6 +24,7 @@ function ContactForm() {
   const [lastName, setLastName] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
   const [emailAddress, setEmailAddress] = useState("");
+  const [middleNameExist, setMiddleNameExist] = useState(true);
 
   useEffect(() => {
     if (contactToUpdate) {
@@ -132,6 +133,16 @@ function ContactForm() {
     return number.startsWith("09") && number.length == 11;
   };
 
+  const handleMiddleNameChange = (e) => {
+    if (e.target.checked) {
+      setMiddleNameExist(false);
+      setMiddleName("");
+      hideAlertMessage();
+    } else {
+      setMiddleNameExist(true);
+    }
+  };
+
   return (
     <>
       <div className="w-full max-w-xl  bg-white border hover:drop-shadow-2xl rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mx-auto">
@@ -170,17 +181,29 @@ function ContactForm() {
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Middle Name
                 </label>
+                {middleNameExist && (
+                  <div>
+                    <input
+                      type="text"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Doe"
+                      required
+                      value={middleName}
+                      onChange={(e) => {
+                        setMiddleName(e.target.value.trim());
+                        validateField("middleName", e.target.value.trim());
+                      }}
+                    />
+                  </div>
+                )}
                 <input
-                  type="text"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Doe"
-                  required
-                  value={middleName}
-                  onChange={(e) => {
-                    setMiddleName(e.target.value.trim());
-                    validateField("middleName", e.target.value.trim());
-                  }}
+                  type="checkbox"
+                  value="true"
+                  onChange={(e) => handleMiddleNameChange(e)}
                 />
+                <label className="ml-2 text-sm font-medium text-gray-900">
+                  No Middle Name
+                </label>
               </div>
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
