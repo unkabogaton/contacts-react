@@ -87,7 +87,7 @@ function ContactForm() {
                   placeholder="John"
                   required
                   value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
+                  onChange={(e) => setFirstName(e.target.value.trim())}
                 />
               </div>
               <div>
@@ -100,7 +100,7 @@ function ContactForm() {
                   placeholder="Doe"
                   required
                   value={middleName}
-                  onChange={(e) => setMiddleName(e.target.value)}
+                  onChange={(e) => setMiddleName(e.target.value.trim())}
                 />
               </div>
               <div>
@@ -113,7 +113,7 @@ function ContactForm() {
                   placeholder="Dela Cruz"
                   required
                   value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
+                  onChange={(e) => setLastName(e.target.value.trim())}
                 />
               </div>
               <div>
@@ -127,7 +127,7 @@ function ContactForm() {
                   pattern="09[0-9]{9}"
                   required
                   value={mobileNumber}
-                  onChange={(e) => setMobileNumber(e.target.value)}
+                  onChange={(e) => setMobileNumber(e.target.value.trim())}
                 />
               </div>
               <div className="mb-3">
@@ -140,7 +140,7 @@ function ContactForm() {
                   placeholder="john.doe@company.com"
                   required
                   value={emailAddress}
-                  onChange={(e) => setEmailAddress(e.target.value)}
+                  onChange={(e) => setEmailAddress(e.target.value.trim())}
                 />
               </div>
             </div>
